@@ -5,6 +5,7 @@ Exploratory analysis and a multiclass classification baseline for the food-inspe
 ## Project contents
 
 - `week1_analysis.py`: profiles the data, evaluates random and chronological holdouts, and summarizes predictions for the unlabeled test rows.
+- `week2_preprocessing.py`: separately prepares the inspection workbooks and provides a configurable cleaning/profile command for production sensor CSVs.
 - `Week 2.docx`: a cleaning and preprocessing plan for food-processing and production-sensor data.
 - `data/food_inspection_dataset.zip`: the original ZIP supplied for the analysis. It contains `Data_Train.xlsx`, `Data_Test.xlsx`, and `Sample_Submission.xlsx`.
 - `Week 1.docx`: the analysis report, results, limitations, and reproducible code appendix.
@@ -47,6 +48,34 @@ python week1_analysis.py "C:\path\to\food_inspection_dataset.zip"
 ```
 
 The script prints data-quality summaries, class balance, random and time-ordered validation metrics, and aggregate test prediction counts. It does not create a submission file.
+
+## Week 2 preprocessing code
+
+Run the inspection-data preparation command from the project root:
+
+```powershell
+python week2_preprocessing.py inspection
+```
+
+It writes cleaned train/test CSVs, a source quality profile, flagged records, and a JSON run summary under `data/processed/inspection/`. Source values are retained, invalid dates and duplicates are flagged rather than silently removed, and missing violation codes are not treated as zero.
+
+For a production-line sensor CSV, pass its timestamp and sensor columns explicitly:
+
+```powershell
+python week2_preprocessing.py sensor "C:\path\to\sensor_readings.csv" --timestamp-col timestamp --sensors temperature_c,pH,flow_rate --group-cols line_id,product_id
+```
+
+Optional engineering ranges must be approved for the relevant sensors and specified in a JSON file:
+
+```json
+{"temperature_c": [0, 120], "pH": [0, 14]}
+```
+
+```powershell
+python week2_preprocessing.py sensor "C:\path\to\sensor_readings.csv" --timestamp-col timestamp --sensors temperature_c,pH --limits-json "C:\path\to\limits.json"
+```
+
+Sensor values are preserved; missing readings, duplicate timestamps, nonnumeric values, engineering-range breaches, and robust statistical outliers are flagged for review. The command does not impute readings or delete outliers. Supply authorized sensor data and validated limits before using this mode; the bundled inspection archive contains no production sensor readings.
 
 ## Interpretation
 
