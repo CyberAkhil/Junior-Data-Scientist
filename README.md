@@ -5,6 +5,7 @@ Exploratory analysis and a multiclass classification baseline for the food-inspe
 ## Project contents
 
 - `week1_analysis.py`: profiles the data, evaluates random and chronological holdouts, and summarizes predictions for the unlabeled test rows.
+- `Week 2.docx`: a cleaning and preprocessing plan for food-processing and production-sensor data.
 - `data/food_inspection_dataset.zip`: the original ZIP supplied for the analysis. It contains `Data_Train.xlsx`, `Data_Test.xlsx`, and `Sample_Submission.xlsx`.
 - `Week 1.docx`: the analysis report, results, limitations, and reproducible code appendix.
 - `requirements.txt`: Python package requirements.
@@ -20,6 +21,8 @@ The City of Chicago's public **Food Inspections** portal is a plausible source t
 The portal attributes the dataset to the City of Chicago, directs users to its Terms of Use, and notes that food-inspection procedures changed on July 1, 2018. Verify the original workbook provenance, applicable reuse terms, field definitions, and the target-label mapping before redistributing the data or relying on the results. The target-value-to-class mapping in this analysis is inferred from the sample-submission column order.
 
 This dataset records food-establishment inspection outcomes. It does not contain direct measurements of processed-product composition, sensory quality, or factory process controls.
+
+The Week 2 plan covers general production sensor data and identifies which profiling steps can be applied to the supplied inspection archive. Sensor calibration, time-series cleaning, and process-limit validation require actual sensor readings and metadata, which are not included in the archive.
 
 ## Requirements
 
